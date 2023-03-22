@@ -1,3 +1,5 @@
-fetch('http://localhost:5678/api-docs/#/')
+const img = document.createElement('img')
+
+fetch('http://localhost:5678/api/works')
 .then(res => res.json())
-.then(data => img.src = data[0].url)
+.then(data => console.log(data))
