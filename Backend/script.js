@@ -11,3 +11,14 @@ fetch('http://localhost:5678/api/works') /* appel à l'api*/
     }
     document.querySelector('.gallery').innerHTML = figure;
 })
+ 
+fetch("http://localhost:5678/api/categories")
+.then(rep => rep.json())
+.then(categories => {
+    const boutonObjet = document.querySelector("#Objets")
+    boutonObjet.addEventListener("click", function(categories){
+        if(categories.id === 1){
+            console.log(boutonObjet)
+        }
+    })
+})
