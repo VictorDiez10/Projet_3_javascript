@@ -186,3 +186,23 @@ footer nav ul {
 	margin: 2em
 }
 
+#Tout {
+	background-color: #FFFFFF;
+	color: #1D6154;
+	border-color: #1D6154;
+	font-family: 'Syne';
+	list-style-type: none;
+	border-width: 1px;
+	border-radius: 20px 20px 20px 20px;
+	width: 90px;
+	height: 32px;
+}
+
+.filtre {
+	display: flex;
+	justify-content: center;
+	justify-content: space-around;
+	margin-bottom: 50px;
+	margin-right: 200px;
+	margin-left: 200px;
+}
