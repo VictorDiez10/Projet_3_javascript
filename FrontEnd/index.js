@@ -35,12 +35,20 @@ function createCard(works) {
 // Création des 4 boutons  avec leurs ID
 
 function createButton(category) {
+  //création du bouton TOUT
   const buttonTout = document.createElement("button");
   buttonTout.setAttribute("id", "Tout");
+  buttonTout.setAttribute("class", "activate")
   buttonTout.innerText = "Tout";
 
   document.querySelector(".filtre").appendChild(buttonTout);
 
+  buttonTout.addEventListener("click", function () {
+    document.querySelector(".gallery").innerHTML = "";
+    createCard(data);
+  })
+
+  //création des 3 derniers boutons avec une boucle 
   for (let i = 0; i < category.length; i++) {
     const button = document.createElement("button");
     button.setAttribute("id", category[i].name);
@@ -52,10 +60,14 @@ function createButton(category) {
       const objetsWorks = data.filter(
         (work) => work.category.name === category[i].name
       );
+      //filtre (en haut) les images par rapport à la catégorie
       document.querySelector(".gallery").innerHTML = "";
       createCard(objetsWorks);
+      //Effacement de la page HTML et apparition des images filtrer
     });
   }
+
+  //Fonctionalité pour que les boutons soit d'une différente couleur lorque l'on clique dessus
   const butonActivate = document.querySelectorAll("button");
 
   butonActivate.forEach(btnActive => {
