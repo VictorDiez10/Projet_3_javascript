@@ -115,3 +115,11 @@ main{
     justify-content: center;
     align-items: center;
 }
+
+h2{
+	display: flex;
+	justify-content: center;
+	font-family: 'Syne';
+	color: #1D6154;
+	font-size: 35px;
+}
