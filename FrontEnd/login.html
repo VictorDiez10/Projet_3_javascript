@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="assets/style.css">
     <title>Login</title>
 </head>
 <body>
@@ -20,16 +20,19 @@
             </ul>
         </nav>
     </header>
+    <section id="login">
     <h2>Log In</h2>
-    <main>
         <form action="#" method="post">
 			<label for="email">Email</label>
 			<input type="email" name="email" id="email">
+
 			<label for="mot de passe">Mot de passe</label>
-			<input type="mot de passe" name="mot de passe" id="mot_de_pass">
-			<input type="submit" value="Se connecter">
+			<input type="password" name="mot de passe" id="mdp">
+            
+			<input type="button" value="Se connecter" id="se_connecter">
+            <a href="#">Mot de passe oublié ?</a>
 		</form>
-    </main>
+    </section>
 <script src="login.js"></script>
 </body>
 </html>
