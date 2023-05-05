@@ -1,3 +1,6 @@
+const userToken = window.sessionStorage.getItem("token");
+console.log(userToken);
+
 // Fonction Fetch pour récupérer les données de l'API
 let data = [];
 async function fetchCard() {
@@ -11,7 +14,11 @@ let categoryData = [];
 async function fetchCategory() {
   const response = await fetch("http://localhost:5678/api/categories");
   categoryData = await response.json();
-  createButton(categoryData);
+  if (!userToken) {
+    createButton(categoryData);
+    const deleteModifier = document.querySelector("#modifier");
+    deleteModifier.remove();
+  }
 }
 fetchCategory();
 
@@ -78,4 +85,24 @@ function createButton(category) {
   });
 }
 
+//Redirection vers la page login (l'id est un peu confus)
+document.getElementById("logout").addEventListener("click", function () {
+  window.location.assign("login.html")
+})
 
+//si on a un token on change le login pars logout, et quand on clique sur logout celui-ci nous redirige vers la page index.html
+if (userToken) {
+  const logout = document.getElementById("logout");
+  const a = document.createElement("a");
+  a.innerText = "logout";
+  a.setAttribute("href", "#");
+  logout.innerText = "";
+  logout.appendChild(a);
+  logout.addEventListener("click", function () {
+    window.sessionStorage.removeItem("token");
+    window.location.assign("index.html");
+  })
+}else{
+  const modeEdition = document.querySelector("#mode_edition");
+  modeEdition.remove();
+}

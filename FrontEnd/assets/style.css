@@ -47,7 +47,7 @@ table {
 	border-spacing: 0;
 }
 /** end reset css**/
-body {
+body{
 	max-width: 1140px;
 	margin:auto;
 	font-family: 'Work Sans' ;
@@ -186,7 +186,7 @@ footer nav ul {
 	margin: 2em
 }
 
-.activate{
+.filtre .activate{
 	background-color: #1D6154;
 	color: #FFFFFF; 
 	border-color: #1D6154;
@@ -199,7 +199,7 @@ footer nav ul {
 
 }
 
-button{
+.filtre button{
 	background-color: #FFFFFF;
 	color: #1D6154;
 	border-color: #1D6154;
@@ -211,6 +211,7 @@ button{
 	width: auto;
 	padding-left: 40px;
 	padding-right: 40px;
+	cursor: pointer;
 }
 
 
@@ -223,7 +224,7 @@ button{
 	margin-left: 200px;
 }
 
-button:hover{
+.filtre button:hover{
 	background-color: #1D6154;
 	color: #FFFFFF;
 }
@@ -246,6 +247,7 @@ input[type="button"]{
 	width: 180px;
 	text-align: center;
 	border-radius: 60px ;
+	cursor: pointer;
 }
 
 #login {
@@ -282,4 +284,49 @@ input[type="button"]{
 #login a {
 	display: flex;
 	justify-content: center;
+}
+
+.modifier {
+	display: flex;
+	justify-content: center;
+	color: #FFFFFF;
+}
+
+.modifier a {
+	margin-top: 10px;
+	margin-left: 10px;
+}
+
+#mode_edition {
+	background-color: black;
+	width: 100%;
+	height: 60px;
+}
+
+.modifier button {
+	background-color: #FFFFFF;
+	color: #000;
+	border-color: #000;
+	font-family: 'Work Sans';
+	list-style-type: none;
+	border-width: 1px;
+	border-radius: 20px 20px 20px 20px;
+	height: 32px;
+	width: auto;
+	padding-left: 25px;
+	padding-right: 25px;
+	cursor: pointer;
+	margin-left: 5px;
+}
+
+#mode_edition div {
+	margin-top: 10px;
+}
+
+#mode_edition a {
+	color: #FFFFFF;
+}
+
+#mode_edition a:hover {
+	color: #B1663C;
 }
