@@ -16,6 +16,11 @@ async function login() {
     window.sessionStorage.setItem("token", resultToken.token);
     window.location.assign("index.html");
   } else {
-    window.alert("Désolé, vous avez saisi une adresse e-mail ou un mot de passe incorrect.");
+    const error = document.createElement("div");
+    error.setAttribute("class", "error");
+    const errorMessage = document.createElement("p");
+    errorMessage.innerText = "Désolé, vous avez saisi une adresse e-mail ou un mot de passe incorrect.";
+    document.querySelector(".message_error").appendChild(error);
+    error.appendChild(errorMessage);
   }
 }

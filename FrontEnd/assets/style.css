@@ -330,3 +330,18 @@ input[type="button"]{
 #mode_edition a:hover {
 	color: #B1663C;
 }
+
+.error {
+	background-color: #fce4e4;
+	border: 1px solid #fcc2c3;
+	padding: 20px 30px;
+}
+
+.error p {
+	color: #cc0033;
+  	font-family: "Syne";
+  	font-size: 13px;
+  	font-weight: bold;
+  	line-height: 20px;
+  	text-shadow: 1px 1px rgba(250,250,250,.3);
+}
