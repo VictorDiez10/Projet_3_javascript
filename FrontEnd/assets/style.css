@@ -345,3 +345,24 @@ input[type="button"]{
   	line-height: 20px;
   	text-shadow: 1px 1px rgba(250,250,250,.3);
 }
+
+.modal {
+	position: fixed;
+	left: 0;
+	top: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	background:rgba(0, 0, 0, 0.8);
+}
+
+.modal-wrapper {
+	background-color: #FFFFFF;
+	width: 600px;
+	padding: 20px;
+	max-width: calc(100vw - 20px);
+	max-height: calc(100vh - 20px);
+	overflow: auto;
+}
