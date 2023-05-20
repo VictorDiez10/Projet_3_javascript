@@ -295,6 +295,7 @@ input[type="button"]{
 .modifier a {
 	margin-top: 10px;
 	margin-left: 10px;
+	height: 20px;
 }
 
 #mode_edition {
@@ -362,7 +363,87 @@ input[type="button"]{
 	background-color: #FFFFFF;
 	width: 600px;
 	padding: 20px;
-	max-width: calc(100vw - 20px);
-	max-height: calc(100vh - 20px);
-	overflow: auto;
+	border-radius: 10px;
+}
+
+.fa-xmark {
+	display: flex;
+	justify-content: flex-end;
+	cursor: pointer;
+}
+
+.image-modal {
+	width: 90px;
+	height: 120px;
+	margin-right: 20px;
+}
+
+.gallery-supp {
+	display: flex;
+	flex-wrap: wrap;
+	padding-left: 35px;
+}
+
+h3 {
+	display: flex;
+	justify-content: center;
+	font-size: x-large;
+	margin-bottom: 45px;
+}
+
+.fa-trash-can {
+	color: white;
+	display: flex;
+	justify-content: center;
+	padding-top: 3px;
+}
+
+.div-poubelle {
+	background-color: #000;
+	width: 20px;
+	height: 20px;
+	margin: 0px;
+	position: relative;
+	bottom: 130px;
+	left: 65px;
+	cursor: pointer;
+}
+
+.fa-trash-can:hover {
+	color: #B1663C;
+}
+
+.button-photo {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 25px;
+	border-top: 1px solid #B3B3B3;
+	margin-left: 34px;
+	margin-right: 34px;
+	padding-bottom: 25px;
+}
+
+.button-photo button {
+	background-color: #1D6154;
+	color: #FFFFFF;
+	border-color: #FFFFFF;
+	font-family: 'Syne';
+	list-style-type: none;
+	border-width: 1px;
+	border-radius: 20px 20px 20px 20px;
+	height: 32px;
+	width: auto;
+	padding-left: 50px;
+	padding-right: 50px;
+	padding-top: 10px;
+	padding-bottom: 25px;
+	cursor: pointer;
+	margin-top: 25px;
+}
+
+.button-photo p {
+	color: #D65353;
+	margin-top: 10px;
+	font-family: 'Syne';
 }

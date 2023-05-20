@@ -7,6 +7,7 @@ async function fetchCard() {
   const response = await fetch("http://localhost:5678/api/works");
   data = await response.json();
   createCard(data);
+  createCardInModal(data);
 }
 fetchCard();
 
@@ -123,8 +124,8 @@ const openModal = function(e) {
   target.setAttribute("aria-modal", "true")
   modal = target
   modal.addEventListener("click", closeModal)
-  modal.querySelector(".js-modal-close")?.addEventListener("click", closeModal)
-  modal.querySelector(".js-modal-stop")?.addEventListener("click", stopPropagation)
+  modal.querySelector(".js-modal-close")?.addEventListener("click", closeModal) /* attention au point d'interrogation */
+  modal.querySelector(".js-modal-stop")?.addEventListener("click", stopPropagation) /* attention au point d'interrogation */
 }
 
 
@@ -137,8 +138,8 @@ const closeModal = function(e) {
   modal.setAttribute("aria-hidden", "true")
   modal.removeAttribute("aria-modal")
   modal.removeEventListener("click", closeModal)
-  modal.querySelector(".js-modal-close")?.removeEventListener("click", closeModal)
-  modal.querySelector(".js-modal-stop")?.removeEventListener("click", stopPropagation)
+  modal.querySelector(".js-modal-close")?.removeEventListener("click", closeModal) /* attention au point d'interrogation */
+  modal.querySelector(".js-modal-stop")?.removeEventListener("click", stopPropagation) /* attention au point d'interrogation */
   modal = null
 }
 
@@ -146,9 +147,32 @@ const stopPropagation = function(e) {
   e.stopPropagation()
 }
 
+//Pour chaque <a> ayant la class js-modal ouvrir la modal
 
 document.querySelectorAll(".js-modal").forEach(a => {
   a.addEventListener("click", openModal)
 })
 
 
+function createCardInModal (works) {
+  for(let i = 0; i < works.length; i++) {
+    const div = document.createElement("div");
+    const divPoubelle = document.createElement("div");
+    divPoubelle.setAttribute("class", "div-poubelle");
+    const poubelle = document.createElement("i");
+    poubelle.setAttribute("class", "fa-solid fa-trash-can")
+    const image = document.createElement("img");
+    image.src = works[i].imageUrl;
+    image.setAttribute("class", "image-modal");
+    const p = document.createElement("p");
+    p.innerText = "éditer";
+
+
+    document.querySelector(".gallery-supp").appendChild(div);
+    div.appendChild(image);
+    div.appendChild(p);
+    div.appendChild(divPoubelle);
+    divPoubelle.appendChild(poubelle);
+    
+  }
+}
