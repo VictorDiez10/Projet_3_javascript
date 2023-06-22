@@ -46,7 +46,7 @@ function createButton(category) {
   //création du bouton TOUT
   const buttonTout = document.createElement("button");
   buttonTout.setAttribute("id", "Tout");
-  buttonTout.setAttribute("class", "activate")
+  buttonTout.setAttribute("class", "activate");
   buttonTout.innerText = "Tout";
 
   document.querySelector(".filtre").appendChild(buttonTout);
@@ -54,9 +54,9 @@ function createButton(category) {
   buttonTout.addEventListener("click", function () {
     document.querySelector(".gallery").innerHTML = "";
     createCard(data);
-  })
+  });
 
-  //création des 3 derniers boutons avec une boucle 
+  //création des 3 derniers boutons avec une boucle
   for (let i = 0; i < category.length; i++) {
     const button = document.createElement("button");
     button.setAttribute("id", category[i].name);
@@ -78,7 +78,7 @@ function createButton(category) {
   //Fonctionalité pour que les boutons soit d'une différente couleur lorque l'on clique dessus
   const butonActivate = document.querySelectorAll("button");
 
-  butonActivate.forEach(btnActive => {
+  butonActivate.forEach((btnActive) => {
     btnActive.addEventListener("click", () => {
       document.querySelector(".activate")?.classList.remove("activate");
       btnActive.classList.add("activate");
@@ -88,8 +88,8 @@ function createButton(category) {
 
 //Redirection vers la page login (l'id est un peu confus)
 document.getElementById("logout").addEventListener("click", function () {
-  window.location.assign("login.html")
-})
+  window.location.assign("login.html");
+});
 
 //si on a un token on change le login pars logout, et quand on clique sur logout celui-ci nous redirige vers la page index.html
 if (userToken) {
@@ -102,65 +102,54 @@ if (userToken) {
   logout.addEventListener("click", function () {
     window.sessionStorage.removeItem("token");
     window.location.assign("index.html");
-  })
-}else{
+  });
+} else {
   const modeEdition = document.querySelector("#mode_edition");
   modeEdition.remove();
 }
 
-
-
 //Fenêtre modal
 //Ouverture de la fenêtre modal
 
-let modal = null
 
 
-const openModal = function(e) {
-  e.preventDefault()
-  const target = document.querySelector(e.target.getAttribute("href"))
-  target.style.display = null
-  target.removeAttribute("aria-hidden")
-  target.setAttribute("aria-modal", "true")
-  modal = target
-  modal.addEventListener("click", closeModal)
-  modal.querySelector(".js-modal-close")?.addEventListener("click", closeModal) /* attention au point d'interrogation */
-  modal.querySelector(".js-modal-stop")?.addEventListener("click", stopPropagation) /* attention au point d'interrogation */
-}
-
-
-//Fermeture de la fenêtre modal
-
-const closeModal = function(e) {
-  if (modal === null) return
-  e.preventDefault()
-  modal.style.display = "none"
-  modal.setAttribute("aria-hidden", "true")
-  modal.removeAttribute("aria-modal")
-  modal.removeEventListener("click", closeModal)
-  modal.querySelector(".js-modal-close")?.removeEventListener("click", closeModal) /* attention au point d'interrogation */
-  modal.querySelector(".js-modal-stop")?.removeEventListener("click", stopPropagation) /* attention au point d'interrogation */
-  modal = null
-}
-
-const stopPropagation = function(e) {
-  e.stopPropagation()
-}
-
-//Pour chaque <a> ayant la class js-modal ouvrir la modal
+const openModale = function (e) {
+  e.preventDefault();
+  modale = document.getElementById("modal1");
+  modale.style.display = "flex";
+  modale.addEventListener("click", closeModale);
+  modale.querySelector(".js-modal-close").addEventListener("click", closeModale);
+  modale.querySelector(".js-modal-stop").addEventListener("click", stopPropagation);
+  modale.querySelector(".js-modal-add").addEventListener("click", closeModale)
+};
+//Fonction pour fermer la modale
+const closeModale = function (e) {
+  e.preventDefault();
+  modale.style.display = "none";
+  modale.removeEventListener("click", closeModale);
+  modale.querySelector(".js-modal-close").removeEventListener("click", closeModale);
+  modale.querySelector(".js-modal-stop").removeEventListener("click", stopPropagation);
+  modale.querySelector(".js-modal-add").removeEventListener("click", closeModale);
+};
+//pour stopper la propagation de l'événement vers les éléments parents
+const stopPropagation = function (e) {
+  e.stopPropagation();
+};
 
 document.querySelectorAll(".js-modal").forEach(a => {
-  a.addEventListener("click", openModal)
-})
+  a.addEventListener("click", openModale);
+});
 
-
-function createCardInModal (works) {
-  for(let i = 0; i < works.length; i++) {
+async function createCardInModal(works) {
+  for (let i = 0; i < works.length; i++) {
     const div = document.createElement("div");
+    div.setAttribute("data-id", works[i].id); //mettre un Id pour pouvoir les selectionner
+    div.setAttribute("class", "div-modal")
     const divPoubelle = document.createElement("div");
     divPoubelle.setAttribute("class", "div-poubelle");
     const poubelle = document.createElement("i");
-    poubelle.setAttribute("class", "fa-solid fa-trash-can")
+    poubelle.setAttribute("class", "fa-solid fa-trash-can");
+    poubelle.setAttribute("id", works[i].id)  //mettre un Id pour pouvoir les selectionner
     const image = document.createElement("img");
     image.src = works[i].imageUrl;
     image.setAttribute("class", "image-modal");
@@ -168,11 +157,98 @@ function createCardInModal (works) {
     p.innerText = "éditer";
 
 
+    //Pour les faire apparaître dans le DOM
     document.querySelector(".gallery-supp").appendChild(div);
     div.appendChild(image);
     div.appendChild(p);
     div.appendChild(divPoubelle);
     divPoubelle.appendChild(poubelle);
-    
-  }
+
+    //Add event Listener pour entendre le click et faire appel a la fonction deleteWork
+    poubelle.addEventListener("click", function() {
+      console.log(poubelle);
+      deleteWork();
+    })
+  };
+};
+
+
+//Faire appel à l'API pour être sûr de supprimer l'image
+function deleteWork(event) {
+  const modal = document.querySelector(".div-modal")
+  const id = modal.dataset.id;
+  fetch(`http://localhost:5678/api/works/${id}`, {
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${userToken}`,
+    },
+  })
+    .then(handleResponse)
+    .then(handleSuccess)
+    .catch(handleError);
 }
+
+// Erreur lors de la suppression
+function handleResponse(response) {
+  if (!response.ok) {
+    throw new Error('Erreur lors de la suppression du travail');
+  }
+  return response
+}
+
+
+function handleSuccess() {
+  const workElement = document.querySelector("data-id");
+  workElement.remove(); // Supprimer l'élément du DOM après la suppression réussie
+}
+
+function handleError(error) {
+  console.error(error);
+  
+  // Afficher un message d'erreur à l'utilisateur
+}
+
+
+
+
+const openModal = function (e) {
+  e.preventDefault();
+  modal = document.getElementById("modal2");
+  modal.style.display = "flex";
+  modal.addEventListener("click", closeModal);
+  modal.querySelector(".js-modal-close").addEventListener("click", closeModal);
+  modal.querySelector(".js-modal-stop").addEventListener("click", stopPropagatione);
+};
+//Fonction pour fermer la modale
+const closeModal = function (e) {
+  e.preventDefault();
+  modal.style.display = "none";
+  modal.removeEventListener("click", closeModal);
+  modal.querySelector(".js-modal-close").removeEventListener("click", closeModal);
+  modal.querySelector(".js-modal-stop").removeEventListener("click", stopPropagatione);
+  
+};
+//pour stopper la propagation de l'événement vers les éléments parents
+const stopPropagatione = function (e) {
+  e.stopPropagatione();
+};
+
+document.querySelectorAll(".js-modal-add").forEach(a => {
+  a.addEventListener("click", openModal, closeModale);
+});     
+
+
+
+
+
+
+/*function dynamicCard() {
+  fetch(`http://localhost:5678/api/works`)
+  .then((response) => {
+    if (response.ok) {
+      document.querySelector(".gallery").innerHTML = "";
+      document.querySelector(".gallery-supp").innerHTML = "";
+      fetchCard();
+    }
+  });
+}*/
