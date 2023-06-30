@@ -15,6 +15,7 @@ let categoryData = [];
 async function fetchCategory() {
   const response = await fetch("http://localhost:5678/api/categories");
   categoryData = await response.json();
+  optionCategorie(categoryData);
   if (!userToken) {
     createButton(categoryData);
     const deleteModifier = document.querySelector("#modifier");
@@ -136,7 +137,7 @@ const stopPropagation = function (e) {
   e.stopPropagation();
 };
 
-document.querySelectorAll(".js-modal").forEach(a => {
+document.querySelectorAll(".js-modal, .fa-arrow-left").forEach(a => {
   a.addEventListener("click", openModale);
 });
 
@@ -167,16 +168,18 @@ async function createCardInModal(works) {
     //Add event Listener pour entendre le click et faire appel a la fonction deleteWork
     poubelle.addEventListener("click", function() {
       console.log(poubelle);
-      deleteWork();
+      deleteWork(div);
     })
   };
 };
 
 
+
 //Faire appel à l'API pour être sûr de supprimer l'image
-function deleteWork(event) {
-  const modal = document.querySelector(".div-modal")
-  const id = modal.dataset.id;
+function deleteWork(div) {
+  console.log(div);
+  const id = div.dataset.id;
+  console.log(id);
   fetch(`http://localhost:5678/api/works/${id}`, {
     method: 'DELETE',
     headers: {
@@ -199,7 +202,7 @@ function handleResponse(response) {
 
 function handleSuccess() {
   const workElement = document.querySelector("data-id");
-  workElement.remove(); // Supprimer l'élément du DOM après la suppression réussie
+  //workElement.remove(); // Supprimer l'élément du DOM après la suppression réussie
 }
 
 function handleError(error) {
@@ -217,7 +220,8 @@ const openModal = function (e) {
   modal.style.display = "flex";
   modal.addEventListener("click", closeModal);
   modal.querySelector(".js-modal-close").addEventListener("click", closeModal);
-  modal.querySelector(".js-modal-stop").addEventListener("click", stopPropagatione);
+  modal.querySelector(".js-modal-stop").addEventListener("click", stopPropagation);
+  modal.querySelector(".fa-arrow-left").addEventListener("click", closeModal);
 };
 //Fonction pour fermer la modale
 const closeModal = function (e) {
@@ -225,19 +229,105 @@ const closeModal = function (e) {
   modal.style.display = "none";
   modal.removeEventListener("click", closeModal);
   modal.querySelector(".js-modal-close").removeEventListener("click", closeModal);
-  modal.querySelector(".js-modal-stop").removeEventListener("click", stopPropagatione);
-  
-};
-//pour stopper la propagation de l'événement vers les éléments parents
-const stopPropagatione = function (e) {
-  e.stopPropagatione();
+  modal.querySelector(".js-modal-stop").removeEventListener("click", stopPropagation);
+  modal.querySelector(".fa-arrow-left").removeEventListener("click", closeModal);
 };
 
 document.querySelectorAll(".js-modal-add").forEach(a => {
   a.addEventListener("click", openModal, closeModale);
 });     
 
+function optionCategorie(categories) {
+  for (let i = 0; i < categories.length; i++) {
+    const option = document.createElement("option");
+    option.setAttribute("value", categories[i].id);
+    option.innerText = `${categories[i].name}`
 
+    document.querySelector("#objet").appendChild(option)
+  }
+};
+
+
+//Utilisation du FormData pour l'envoi des données de formulaire
+const form = document.querySelector(".formulaire form ");
+console.log(form);
+
+
+form.addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const formData = new FormData(form);
+
+   for(item of formData) {
+    console.log(item[0], item[1]);
+  };
+
+
+//Appel à l'API
+ /* fetch("http://localhost:5678/api/works", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${userToken}`,
+      'ContentType': 'multipart/form-data'
+    },
+    body: formData
+  })
+  .then(res => res.json())
+  .then(data => console.log(data))
+  .catch(error => console.log(error));
+*/
+})
+
+//click sur le bouton affiche le selecteur de document
+const realFile = document.querySelector("#file");
+const customButton = document.querySelector(".ajout");
+
+customButton.addEventListener("click", function() {
+  realFile.click()
+});
+
+
+const preview = document.querySelector(".ajout-photo");
+
+realFile.addEventListener("change", updateImageDisplay);
+
+//Fonction pour afficher l'image selectioner 
+function updateImageDisplay() {
+  while(preview.firstChild) {
+    preview.removeChild(preview.firstChild);
+  }
+
+  const currentFiles = realFile.files;
+  console.log(currentFiles)
+    for(let i = 0; i < currentFiles.length; i++) {
+      if(validFileType(currentFiles[i])) {
+        const image = document.createElement('img');
+        image.src = window.URL.createObjectURL(currentFiles[i]);
+        image.style.width = "130px"
+        image.style.height = "170px"
+
+        preview.appendChild(image);
+
+      }
+    }
+}
+
+
+var fileTypes = [
+  'image/jpeg',
+  'image/pjpeg',
+  'image/png'
+]
+//fonction pour vérifier le type d'image 
+function validFileType(file) {
+  for(let i = 0; i < fileTypes.length; i++) {
+    if(file.type === fileTypes[i]) {
+      return true;
+    }
+  }
+
+  return false;
+}
 
 
 

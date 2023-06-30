@@ -46,27 +46,54 @@
 
 		<aside id="modal1" class="modal" role="dialog" style="display: none;">
 			<div class="modal-wrapper js-modal-stop">
+				<div class="x">
 				<i class="fa-solid fa-xmark js-modal-close"></i>
-				<h3>Galerie photo</h3>
-				<div class="gallery-supp">
-
 				</div>
+				<h3>Galerie photo</h3>
+				<div class="gallery-supp"></div>
 
 				<div class="button-photo">
 					<button class="js-modal-add">Ajouter une photo</button>
 					<a href="#"><p>Supprimer la galerie</p></a>
-				</div>
+			</div>
 		</aside>
 
 		<aside id="modal2" class="modal" role="dialog" style="display: none;">
 			<div class="modal-wrapper js-modal-stop">
-				<i class="fa-solid fa-xmark js-modal-close"></i>
+				<div class="x-arrow">
+					<i class="fa-solid fa-arrow-left"></i>
+					<i class="fa-solid fa-xmark js-modal-close"></i>
+				</div>
 				<h3>Ajout photo</h3>
-				<form action="#" method="post">
-					<input type="file">
-				</form>
-			</div>
+				<div class="formulaire">
+					<form>
+						<div class="file">
+							<div class="ajout-photo">
+									<i class="fa-solid fa-image fa-5x"></i>
+									<input type="file" id="file" name="image" accept="jpg, png">
+								<button class="ajout">+ Ajouter photo</button>
+								jpg, png : 4mo max
+							</div>
+						
+						</div>
+						<label for="titre" class="titre">Titre</label>
+						<input type="text" name="title" id="titre" name="titre">
+						<label for="categorie" id="categorie">Catégorie</label>
+						<select id="objet" name="category">
+							<option value=""></option>
+							<!--<option value="1">Objets</option>
+							<option value="2">Appartements</option>
+							<option value="3">Hôtels & restaurants</option>-->
+						</select>
 
+						<div class="button-valider">
+							<button id="valider" type="submit">Valider</button>
+						</div>
+					</form>
+				</div>
+
+				
+			</div>
 		</aside>
 
 		<div class="filtre"></div>
