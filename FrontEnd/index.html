@@ -12,6 +12,7 @@
 	<script src="https://kit.fontawesome.com/2166866593.js" crossorigin="anonymous"></script>
 </head>
 <body>
+	<div class="succes">Votre image à été ajouté</div>
 	<div id="mode_edition" class="modifier">
 		<div><a href="#modal1" class="js-modal"><i class="fa-regular fa-pen-to-square"></i>Mode édtion</a><button>publier les changements</button></div>
 	</div>
@@ -55,6 +56,9 @@
 				<div class="button-photo">
 					<button class="js-modal-add">Ajouter une photo</button>
 					<a href="#"><p>Supprimer la galerie</p></a>
+					<div class="flex-notification">
+						<div class="suppression">Suppression réussie</div>
+					</div>
 			</div>
 		</aside>
 
@@ -66,37 +70,43 @@
 				</div>
 				<h3>Ajout photo</h3>
 				<div class="formulaire">
-					<form>
+					<form action="" method="post" enctype="multipart/form-data">
 						<div class="file">
 							<div class="ajout-photo">
+								<div class="hidden">
 									<i class="fa-solid fa-image fa-5x"></i>
 									<input type="file" id="file" name="image" accept="jpg, png">
-								<button class="ajout">+ Ajouter photo</button>
+								<a class="ajout">+ Ajouter photo</a>
 								jpg, png : 4mo max
+							</div>
 							</div>
 						
 						</div>
 						<label for="titre" class="titre">Titre</label>
 						<input type="text" name="title" id="titre" name="titre">
+			
 						<label for="categorie" id="categorie">Catégorie</label>
 						<select id="objet" name="category">
-							<option value=""></option>
-							<!--<option value="1">Objets</option>
-							<option value="2">Appartements</option>
-							<option value="3">Hôtels & restaurants</option>-->
+							<option value="0"></option>
 						</select>
+						
 
 						<div class="button-valider">
 							<button id="valider" type="submit">Valider</button>
 						</div>
 					</form>
 				</div>
-
+				<div class="flex-notification">
+					<div class="alert">Veuillez remplir tous les champs</div>
+					
+				</div>
 				
 			</div>
 		</aside>
 
-		<div class="filtre"></div>
+		<div class="filtre">
+			
+		</div>
 		<div class="gallery">
 			
 		</div>
@@ -123,6 +133,7 @@
 		</ul>
 	</nav>
 </footer>
+
 <script src="index.js"></script>
 </body>
 </html>

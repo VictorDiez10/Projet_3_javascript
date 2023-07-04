@@ -104,6 +104,10 @@ if (userToken) {
     window.sessionStorage.removeItem("token");
     window.location.assign("index.html");
   });
+  const notification = document.querySelector(".alert")
+  notification.style.position = "fixed"
+  const succes = document.querySelector(".succes")
+  succes.style.position = "fixed"
 } else {
   const modeEdition = document.querySelector("#mode_edition");
   modeEdition.remove();
@@ -142,6 +146,8 @@ document.querySelectorAll(".js-modal, .fa-arrow-left").forEach(a => {
 });
 
 async function createCardInModal(works) {
+  const gallerySupp = document.querySelector(".gallery-supp");
+  gallerySupp.innerHTML = ""
   for (let i = 0; i < works.length; i++) {
     const div = document.createElement("div");
     div.setAttribute("data-id", works[i].id); //mettre un Id pour pouvoir les selectionner
@@ -159,7 +165,7 @@ async function createCardInModal(works) {
 
 
     //Pour les faire apparaître dans le DOM
-    document.querySelector(".gallery-supp").appendChild(div);
+    gallerySupp.appendChild(div);
     div.appendChild(image);
     div.appendChild(p);
     div.appendChild(divPoubelle);
@@ -203,6 +209,14 @@ function handleResponse(response) {
 function handleSuccess() {
   const workElement = document.querySelector("data-id");
   //workElement.remove(); // Supprimer l'élément du DOM après la suppression réussie
+  const suppression = document.querySelector(".suppression")
+  suppression.style.bottom = "2rem";
+  setTimeout(() => {
+    suppression.style.bottom = "-8rem"
+  }, 2000)
+  const gallery = document.querySelector(".gallery")
+  gallery.innerHTML = ""
+  fetchCard()
 }
 
 function handleError(error) {
@@ -224,7 +238,7 @@ const openModal = function (e) {
   modal.querySelector(".fa-arrow-left").addEventListener("click", closeModal);
 };
 //Fonction pour fermer la modale
-const closeModal = function (e) {
+const closeModal = function closeModal2(e) {
   e.preventDefault();
   modal.style.display = "none";
   modal.removeEventListener("click", closeModal);
@@ -250,7 +264,6 @@ function optionCategorie(categories) {
 
 //Utilisation du FormData pour l'envoi des données de formulaire
 const form = document.querySelector(".formulaire form ");
-console.log(form);
 
 
 form.addEventListener("submit", function(e) {
@@ -261,10 +274,10 @@ form.addEventListener("submit", function(e) {
    for(item of formData) {
     console.log(item[0], item[1]);
   };
-
-
+  
 //Appel à l'API
- /* fetch("http://localhost:5678/api/works", {
+if(titleImage.value != "" && divHidden.style.display == "none" && categorieOption.value != "0") {
+  fetch("http://localhost:5678/api/works", {
     method: "POST",
     headers: {
       Authorization: `Bearer ${userToken}`,
@@ -273,10 +286,41 @@ form.addEventListener("submit", function(e) {
     body: formData
   })
   .then(res => res.json())
-  .then(data => console.log(data))
+  .then(data => {
+    console.log(data)
+    const succes = document.querySelector(".succes");
+  succes.style.bottom = "2rem";
+  setTimeout(() => {
+    succes.style.bottom = "-8rem"
+  }, 2000)
+  const gallery = document.querySelector(".gallery")
+  gallery.innerHTML = ""
+  if(validButton.style.backgroundColor = "#1D6154") {
+    const modal2 = document.querySelector("#modal2")
+    modal2.style.display = "none"
+    titleImage.value = "";
+    categorieOption.value = "0"
+    const img = document.querySelector(".ajout-photo img")
+    img.remove()
+    img.style.display = "none"
+    divHidden.style.display = "flex"
+  }
+  
+  fetchCard();
+
+  } )
   .catch(error => console.log(error));
-*/
-})
+
+  
+}else{
+  const notification = document.querySelector(".alert");
+  notification.style.bottom = "2rem";
+  setTimeout(() => {
+    notification.style.bottom = "-8rem"
+  }, 2000)
+}
+}
+)
 
 //click sur le bouton affiche le selecteur de document
 const realFile = document.querySelector("#file");
@@ -286,19 +330,15 @@ customButton.addEventListener("click", function() {
   realFile.click()
 });
 
-
-const preview = document.querySelector(".ajout-photo");
-
+const imagePreview = document.querySelector(".ajout-photo");
+const divHidden = document.querySelector(".hidden")
 realFile.addEventListener("change", updateImageDisplay);
 
 //Fonction pour afficher l'image selectioner 
 function updateImageDisplay() {
-  while(preview.firstChild) {
-    preview.removeChild(preview.firstChild);
-  }
+  divHidden.style.display = "none"
 
   const currentFiles = realFile.files;
-  console.log(currentFiles)
     for(let i = 0; i < currentFiles.length; i++) {
       if(validFileType(currentFiles[i])) {
         const image = document.createElement('img');
@@ -306,16 +346,18 @@ function updateImageDisplay() {
         image.style.width = "130px"
         image.style.height = "170px"
 
-        preview.appendChild(image);
+        imagePreview.appendChild(image);
 
       }
     }
+   updateButtonColor();
+
 }
 
 
 var fileTypes = [
   'image/jpeg',
-  'image/pjpeg',
+  'image/jpeg',
   'image/png'
 ]
 //fonction pour vérifier le type d'image 
@@ -330,15 +372,22 @@ function validFileType(file) {
 }
 
 
+const titleImage = document.querySelector("#titre");
+const validButton = document.querySelector("#valider");
+const categorieOption = document.querySelector("select");
 
 
-/*function dynamicCard() {
-  fetch(`http://localhost:5678/api/works`)
-  .then((response) => {
-    if (response.ok) {
-      document.querySelector(".gallery").innerHTML = "";
-      document.querySelector(".gallery-supp").innerHTML = "";
-      fetchCard();
-    }
-  });
-}*/
+
+function updateButtonColor() {
+  if(titleImage.value != "" && divHidden.style.display == "none" && categorieOption.value != "0") {
+      validButton.style.backgroundColor = "#1D6154";
+      validButton.style.cursor = "pointer"
+  }else{
+      validButton.style.backgroundColor = "";
+      validButton.style.cursor = "default"
+  }
+};
+
+titleImage.addEventListener("input", updateButtonColor);
+categorieOption.addEventListener("input", updateButtonColor);
+

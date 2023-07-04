@@ -520,29 +520,32 @@ form #file {
 	align-items: center;
 }
 
-.ajout-photo button {
+.hidden {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.ajout-photo a {
 	background-color: #cbd6dc;
 	color: #306685;
 	border-color: #cbd6dc;
-	font-family: 'Syne';
-	list-style-type: none;
-	border-width: 1px;
+	font-family: 'Work sans';
 	border-radius: 20px 20px 20px 20px;
-	height: 32px;
-	width: auto;
+	padding-top: 10px;
+	padding-bottom: 10px;
 	padding-left: 40px;
 	padding-right: 40px;
 	cursor: pointer;
-	border: 0;
 	margin-bottom: 5px;
+	font-weight: 600;
 }
 
 .button-valider {
 	display: flex;
 	justify-content: center;
 	border-top: #B3B3B3 solid 2px;
-	margin-left: 59px;
-	margin-right: 59px;
 }
 
 .button-valider button {
@@ -559,4 +562,44 @@ form #file {
 	padding-right: 80px;
 	border: 0;
 	margin-top: 30px;
+}
+
+.alert {
+	color: #FFFFFF;
+	background-color: #1D6154;
+	border-radius: 5px;
+	padding: 1.2rem 2.4rem;
+	box-shadow: 3px 6px 12px rgba(0, 0, 0, 0.4);
+	bottom: -8rem;
+	transition: all 0.4s;
+}
+
+
+
+.flex-notification {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.succes {
+	position: fixed;
+	color: #FFFFFF;
+	background-color: #1D6154;
+	border-radius: 5px;
+	padding: 1.2rem 2.4rem;
+	box-shadow: 3px 6px 12px rgba(0, 0, 0, 0.4);
+	bottom: -8rem;
+	transition: all 0.4s;
+}
+
+.suppression {
+	position: fixed;
+	color: #FFFFFF;
+	background-color: #1D6154;
+	border-radius: 5px;
+	padding: 1.2rem 2.4rem;
+	box-shadow: 3px 6px 12px rgba(0, 0, 0, 0.4);
+	bottom: -8rem;
+	transition: all 0.4s;
 }
